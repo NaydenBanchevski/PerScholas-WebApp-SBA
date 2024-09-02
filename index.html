@@ -1,13 +1,32 @@
-<!doctype html>
+<!DOCTYPE html>
 <html lang="en">
   <head>
     <meta charset="UTF-8" />
-    <link rel="icon" type="image/svg+xml" href="/vite.svg" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-    <title>Vite App</title>
+    <title>PerScholas Assistant</title>
+    <link rel="stylesheet" href="style.css">
   </head>
   <body>
-    <div id="app"></div>
-    <script type="module" src="/main.js"></script>
+    <div id="chatContainer">
+      <div class="hero">
+        <img src="https://upload.wikimedia.org/wikipedia/commons/e/e9/Per-Scholas-Secondary-Logo-Dark.png" alt="logo" width="125" height="55">
+        <h1>Assistant</h1>
+      </div>
+        <div class="voice-container">
+          <select id="voiceSelect">
+            <option value="" disabled selected>Select a voice</option>
+          </select>
+        </div>
+      <div id="chatHistory" class="chat-history">
+      </div>
+      <div class="form-container">
+        <form id="chatForm">
+          <textarea id="question" placeholder="Ask a question..." ></textarea>
+          <button type="submit">Ask</button>
+          <button type="button" id="stopButton">Stop</button>
+        </form>
+      </div>
+
+    <script src="main.js" type="module"></script>
   </body>
 </html>
