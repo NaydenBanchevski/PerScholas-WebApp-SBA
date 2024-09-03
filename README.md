@@ -23,7 +23,6 @@ Welcome to the **Llama-Powered Chat Application**, a dynamic and responsive web 
 - **Responsive Design**:
 
   - Ensures the application looks great on both desktop and mobile devices.
-  - Dark mode inspired by Atom One theme for a sleek, modern interface.
 
 - **Smooth Scrolling and User Controls**:
   - Automatically scrolls the chat to the latest messages, with controls to pause scrolling when reviewing past messages.
