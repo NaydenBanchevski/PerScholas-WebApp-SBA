@@ -2,7 +2,7 @@
 
 Welcome to the **Llama-Powered Chat Application**, a dynamic and responsive web application that leverages the power of the Llama API for intelligent chat completions, and integrates advanced browser features like SpeechSynthesis for text-to-speech functionality. This project is built using HTML, CSS, and JavaScript, focusing on modern web standards and user-friendly interactions.
 
-![Cover Image](./thumbnail.png)
+![Cover Image](./assets/thumbnail.png)
 
 ## ✨ Features
 
