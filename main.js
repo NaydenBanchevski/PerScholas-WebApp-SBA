@@ -5,52 +5,70 @@ const groq = new Groq({
   apiKey: import.meta.env.VITE_GROQ_API_KEY,
 });
 
-const API_BASE_URL = "https://api.sws.speechify.com";
-const API_KEY = import.meta.env.VITE_SPEECHIFY_API_KEY;
-const VOICE_ID = "george";
+// due to no tokens left I have to change the app to Web Speech API SpeechRecognition
 
-async function getGroqChatCompletion(userQuestion) {
-  const chatCompletion = await groq.chat.completions.create({
-    messages: [
-      {
-        role: "user",
-        content: "Hello, How can I help you today?",
-      },
-    ],
-    model: "llama3-8b-8192",
+async function handleQuestion(event) {
+  event.preventDefault();
+  isStopped = false;
+
+  const question = document.getElementById("question").value;
+  const chatHistory = document.getElementById("chatHistory");
+
+  const userMessageElement = document.createElement("div");
+  userMessageElement.classList.add("message user");
+  userMessageElement.innerHTML = `<div class="message-content">${question}</div>`;
+  chatHistory.appendChild(userMessageElement);
+
+  const aiMessageElement = document.createElement("div");
+  aiMessageElement.className = "message ai";
+  aiMessageElement.innerHTML = `<div class="message-content><div class="typing-indicator"></div></div>`;
+  chatHistory.appendChild(aiMessageElement);
+
+  const messageContent = aiMessageElement.querySelector(".message-content");
+  const typingIndicator = messageContent.querySelector(".typing-indicator");
+
+  try {
+    typingIndicator.style.visibility = "visible";
+    document.getElementById("question").value = "";
+    const response = await getGroqChatCompletion(question);
+
+    let responseText = "";
+    for (let i = 0; i < response.length; i++) {
+      if (isStopped) {
+        responseText += "(stopped)";
+        break;
+      }
+      responseText += response[i];
+      messageContent.innerHTML = formatResponse(responseText);
+      chatHistory.scrollTop = chatHistory.scrollHeight;
+      await new Promise((resolve) => setTimeout(resolve, 25));
+      typingIndicator.style.visibility = "hidden";
+    }
+  } catch (error) {}
+}
+
+let isStopped = false;
+let selectedVoice = null;
+let synth = window.speechSynthesis;
+
+let utterance = null;
+let isSpeaking = false;
+
+function populateVoiceOptions() {
+  const voiceSelect = document.getElementById("voiceSelect");
+  const voices = window.speechSynthesis.getVoices();
+
+  voices.forEach((voice) => {
+    const option = document.createElement("option");
+    option.textContent = voice.name;
+    option.textContent = `${voice.name} - ${voice.lang}`;
+    voiceSelect.appendChild(option);
   });
-
-  let response = chatCompletion.choices[0]?.message?.content || "";
-
-  if (response.length > 200) {
-    response = response.substring();
-  }
-  return response;
 }
+window.speechSynthesis.onvoiceschanged = populateVoiceOptions;
 
-async function getAudio(text) {
-  const res = await fetch(`${API_BASE_URL}/v1/audio/speech`, {
-    method: "POST",
-    body: JSON.stringify({
-      input: `<speak>${text}</speak>`,
-      voice_id: VOICE_ID,
-      audio_format: "mp3",
-    }),
-    headers: {
-      Authorization: `Bearer ${API_KEY}`,
-      "content-type": "application/json",
-    },
-  });
-}
-
-if (!res.ok) {
-  throw new Error(`${res.status} ${res.statusText}\n${await res.text()}`);
-}
-
-const responseData = await res.json();
-
-const decodedAudioData = Uint8Array.from(atob(responseData.audio_data), (c) =>
-  c.charCodeAt(0)
-);
-
-return new Blob([decodedAudioData], { type: "audio/mp3" });
+voiceSelect.onchange = function () {
+  selectedVoice = voices.find((voice) => voice.name === voiceSelect.value);
+};
+document.getElementById("chatForm").addEventListener("submit", handleQuestion);
+document.getElementById("stopButton").addEventListener("click", stopResponse);
