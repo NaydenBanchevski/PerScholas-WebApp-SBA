@@ -1,8 +1,3 @@
-.material-symbols-outlined {
-  font-variation-settings: "FILL" 0, "wght" 400, "GRAD" 0, "opsz" 24;
-  color: #333333;
-}
-
 * {
   margin: 0;
   padding: 0;
@@ -37,7 +32,7 @@ body {
 }
 .hero h1 {
   margin-top: 5px;
-  color: #0d7dc1;
+  color: #1d5f87;
 }
 
 #chatContainer {
@@ -61,18 +56,16 @@ body {
 }
 
 .chat-history button {
-  border: none;
+  width: fit-content;
+  background-color: #e0f7ff;
   text-align: center;
   display: flex;
   justify-content: center;
   align-items: center;
-  border-radius: 50%;
-  width: 10px;
-  height: 40px;
-  margin-left: 5px;
-}
-.chat-history button:hover {
-  background: #e0f7ff;
+  padding: 5px 10px;
+  margin-left: 10px;
+  margin-top: -10px;
+  margin-bottom: 20px;
 }
 
 .message {
@@ -93,18 +86,12 @@ body {
   color: #ffffff;
   padding: 10px;
   border-radius: 12px;
-  max-width: 70%;
+  max-width: 60%;
   box-shadow: 0 2px 6px rgba(0, 0, 0, 0.1);
 }
 
 .message.ai {
-  display: flex;
-  align-items: center;
-  align-content: flex-end;
   justify-content: flex-start;
-}
-.message.ai button {
-  align-self: flex-end;
 }
 
 .message.ai .message-content {
@@ -112,7 +99,7 @@ body {
   color: #333333;
   padding: 10px;
   border-radius: 12px;
-  max-width: 80%;
+  max-width: 60%;
 }
 
 .typing-indicator {
@@ -182,7 +169,6 @@ blockquote {
 
 .keyword.medium-importance {
   color: #aa00ff;
-  font-weight: bold;
 }
 
 .keyword.low-importance {
@@ -195,9 +181,9 @@ blockquote {
 }
 
 button {
-  background-color: white;
-  color: #0d7dc1;
-  border: 1px solid #0d7cc196;
+  background-color: #0d7dc1;
+  color: #ffffff;
+  border: none;
   padding: 10px 20px;
   border-radius: 6px;
   cursor: pointer;
@@ -207,8 +193,7 @@ button {
 }
 
 button:hover {
-  background-color: #0d7dc1;
-  color: #ffffff;
+  background-color: #004d99;
   transform: translateY(-2px);
 }
 
@@ -218,6 +203,7 @@ button:active {
 
 select {
   background-color: #ffffff;
+  color: #333333;
   border: 1px solid #cce4f6;
   padding: 10px;
   border-radius: 4px;
@@ -242,5 +228,50 @@ textarea {
 
 textarea:focus {
   outline: none;
-  border-color: #0d7cc1b2;
+  border-color: #0066cc;
+}
+
+@media (max-width: 768px) {
+  body {
+    font-size: 14px;
+  }
+
+  .hero {
+    width: 80vw;
+    flex-direction: column;
+    gap: 10px;
+  }
+
+  .hero h1 {
+    font-size: 14px;
+    text-align: right;
+    width: 100%;
+  }
+
+  #chatContainer {
+    width: 90vw;
+    min-width: unset;
+    height: 60vh;
+    padding: 10px;
+  }
+
+  .chat-history {
+    padding-right: 5px;
+  }
+
+  .message.user .message-content,
+  .message.ai .message-content {
+    max-width: 80%;
+  }
+
+  button {
+    padding: 8px 16px;
+    font-size: 14px;
+  }
+
+  select,
+  textarea {
+    font-size: 14px;
+    padding: 8px;
+  }
 }
