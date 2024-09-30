@@ -97,10 +97,10 @@ export function formatResponse(text) {
   text = text.replace(/^(\d+)\.\s\*\*(.*?)\*\*/gm, "<strong>$1. $2</strong>");
 
   // Replace subheadings (e.g., "## Subheading")
-  text = text.replace(/^##\s(.*?)/gm, "<strong><u>$1</u></strong>");
+  text = text.replace(/^##\s(.+)/gm, "<strong><u>$1</u></strong>");
 
   // Replace sub-subheadings (e.g., "### Sub-subheading")
-  text = text.replace(/^###\s(.*?)/gm, "<strong><em>$1</em></strong>");
+  text = text.replace(/^###\s(.+)/gm, "<strong><em>$1</em></strong>");
 
   // Replace bold text (e.g., "**bold**")
   text = text.replace(/\*\*(.*?)\*\*/g, "<strong>$1</strong>");
