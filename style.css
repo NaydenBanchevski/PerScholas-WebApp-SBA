@@ -258,7 +258,7 @@ textarea:focus {
   #chatContainer {
     width: 90vw;
     min-width: unset;
-    height: 60vh;
+    height: 90vh;
     padding: 10px;
   }
 
